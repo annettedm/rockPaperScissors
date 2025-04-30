@@ -3,11 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
   <link rel="stylesheet" href="styles.css">
   <script type="module" src="script.js"></script>
   <title>Document</title>
 </head>
 <body>
-  
+  <header class="bg-success text-white p-4 mb-3">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1>Rock paper scissors</h1>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="container">
+    <div class="instructions" id="instructions">
+      <p>There are 5 rounds in a game. To play a round select one of the buttons: rock, paper or scissors.</p>
+    </div>
+    <div class="round" id="round">
+      <p>Round 1</p>
+    </div>
+    <div id="score" class="score">
+      <h3>Score</h3>
+      <h5>Human: <span></span></h5>
+      <h5>Computer: <span></span></h5>
+    </div>
+    <div class="round-results" id="round-results">
+      <p>Results here</p>
+    </div>
+    <div class="playGame" id="playGame">
+      <button class="btn btn-dark">Rock</button>
+      <button class="btn btn-dark">Paper</button>
+      <button class="btn btn-dark">Scissors</button>
+    </div>
+  </div>
 </body>
 </html>

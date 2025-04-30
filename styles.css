@@ -1,0 +1,9 @@
+h1, .instructions,
+.round p  {
+  text-align: center;
+}
+
+.round p {
+  font-size: 24px;
+  font-weight: 700;
+}

@@ -79,12 +79,11 @@ function playRound() {
 
 
 function playGame() {
-  console.log("Let's start a game.")
 
   for (let i = 1; i <= 5; i++) {
     console.log('------');
     console.log(`Round ${i}`);
-    playRound();
+    //playRound();
     console.log('------');
   }
 
