@@ -7,3 +7,7 @@ h1, .instructions,
   font-size: 24px;
   font-weight: 700;
 }
+
+.round-results p:first-child {
+  margin-bottom: 0;
+}

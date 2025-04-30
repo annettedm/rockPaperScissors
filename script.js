@@ -1,45 +1,11 @@
-  
+import { getElement, enable, disable } from "./modules/helpers.js";
+import { makeComputerChoice } from "./modules/computerChoice.js"; 
+import { decideWinner, showWinner } from "./modules/decideWinner.js";
+
+
 let userScore = 0;
 let compScore = 0;
-
-function makeUserChoice() {
-  const userChoice = prompt("Select rock, paper or scissors").toLowerCase();
-  //console.log(`use choice is ${userChoice}`);
-  return userChoice;
-}
-
-function makeComputerChoice() {
-  const compNumber = Math.floor(Math.random() * 3) + 1;
-  //console.log(compNumber);
-  switch (compNumber) {
-    case 1: return "rock";
-    case 2: return "paper";
-    case 3: return "scissors";
-  }
-}
-
-function capitalize(word) {
-  const firstLetter = word[0].toUpperCase(); 
-  word = firstLetter + word.slice(1);
-  return word;
-}
-
-function decideWinner(userChoice, compChoice) {
-  if ((userChoice == "rock" && compChoice == "rock")
-    || (userChoice == "paper" && compChoice == "paper")
-    || (userChoice == "scissors" && compChoice == "scissors")) {
-    console.log("It's a tie.");
-    return "tie";
-  } else if ((userChoice == "rock" && compChoice == "scissors")
-    || (userChoice == "scissors" && compChoice == "paper")
-    || userChoice == "paper" && compChoice == "rock") {
-    console.log(`User wins. ${capitalize(userChoice)} ${userChoice == "scissors" ? "beat" : "beats"} ${compChoice}.`);
-    return "user";
-  } else {
-    console.log(`Computer wins. ${capitalize(compChoice)} ${compChoice == "scissors" ? "beat" : "beats"} ${userChoice}.`);
-    return "computer";
-  }
-}
+let round = 0;
 
 function updateScores(roundResult) {
   switch (roundResult) {
@@ -62,35 +28,43 @@ function printScores() {
   console.log(`Computer score: ${compScore}.`);
 }
 // 3. results are compared, the winner or ties are denoted
-function playRound() {
-  const userChoice = makeUserChoice();
+
+
+
+// --------------------------------------------------------------
+
+const btnsContainer = document.querySelector("#btnsContainer");
+
+btnsContainer.addEventListener("click", playGame);
+
+function playGame(event) {
+  if (round === 5) {
+    btnsContainer.removeEventListener("click", playGame);
+    // make all three buttons disabled 
+    // element.setAttribute("disabled");
+    // add text that the game is over
+    // add a button to start a new rounds session
+    // make actions to restart all the values 
+  } else {
+    playRound(event);
+  }
+}
+
+function playRound(event) {
+  const userChoice = event.target.id;
   const compChoice = makeComputerChoice();
 
-  console.log(`User choice is ${userChoice}.`);
-  console.log(`Computer choice is ${compChoice}.`);
+  showRoundChoice(userChoice, compChoice);
 
   const winner = decideWinner(userChoice, compChoice);
 
-  updateScores(winner);
-  printScores();
+  // updateScores(winner);
+  // printScores();
   // compare results
   // tell the winner or tie
 }
 
-
-function playGame() {
-
-  for (let i = 1; i <= 5; i++) {
-    console.log('------');
-    console.log(`Round ${i}`);
-    //playRound();
-    console.log('------');
-  }
-
-  console.log("The game is over.");
+function showRoundChoice(userChoice, compChoice) {
+  document.querySelector("#round-results").firstElementChild.textContent = `User choice is ${userChoice}`;
+  document.querySelector("#round-results").lastElementChild.textContent = ` Computer choice is ${compChoice}`;
 }
-
-// play entire game with 5 rounds 
-
-// function that starts the game 
-playGame();
