@@ -1,5 +1,5 @@
 h1, .instructions,
-.round p  {
+.round {
   text-align: center;
 }
 
@@ -10,4 +10,8 @@ h1, .instructions,
 
 .round-results p:first-child {
   margin-bottom: 0;
+}
+
+.game-over  {
+  color: red;
 }

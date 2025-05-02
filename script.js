@@ -1,52 +1,25 @@
-import { getElement, enable, disable } from "./modules/helpers.js";
 import { makeComputerChoice } from "./modules/computerChoice.js"; 
-import { decideWinner, showWinner } from "./modules/decideWinner.js";
-
+import { decideWinner, showWinner, showUserCompChoice } from "./modules/decideWinner.js";
+import { updateRoundNumber, showRoundChoice, updateScores, printScores, showRound } from "./modules/roundHelpers.js";
+import { disableBtns, enableBtns } from "./modules/btnsHelpers.js";
+import { showGameOverMessage, showGameWinner, removeGameOverMessage, removeGameWinner } from "./modules/gameOverHelpers.js";
 
 let userScore = 0;
 let compScore = 0;
 let round = 0;
+const maxRounds = 5;
 
-function updateScores(roundResult) {
-  switch (roundResult) {
-    case "tie":
-      userScore++;
-      compScore++;
-      break;
-    case "user":
-      userScore++;
-      break;
-    case "computer":
-      compScore++;
-      break;
-  }
-}
-
-function printScores() {
-  console.log("----")
-  console.log(`User score: ${userScore}.`);
-  console.log(`Computer score: ${compScore}.`);
-}
-// 3. results are compared, the winner or ties are denoted
-
-
-
-// --------------------------------------------------------------
 
 const btnsContainer = document.querySelector("#btnsContainer");
 
 btnsContainer.addEventListener("click", playGame);
 
 function playGame(event) {
-  if (round === 5) {
+  playRound(event);
+
+  if (round === maxRounds) {
     btnsContainer.removeEventListener("click", playGame);
-    // make all three buttons disabled 
-    // element.setAttribute("disabled");
-    // add text that the game is over
-    // add a button to start a new rounds session
-    // make actions to restart all the values 
-  } else {
-    playRound(event);
+    gameOver();
   }
 }
 
@@ -54,17 +27,62 @@ function playRound(event) {
   const userChoice = event.target.id;
   const compChoice = makeComputerChoice();
 
+  round = updateRoundNumber(round, maxRounds);
+
+  let wording = showWinner(decideWinner(userChoice, compChoice));
+  showUserCompChoice(wording);
+
+  [userScore, compScore] = updateScores(decideWinner(userChoice, compChoice), userScore, compScore);
+  showRound(round, maxRounds);
   showRoundChoice(userChoice, compChoice);
-
-  const winner = decideWinner(userChoice, compChoice);
-
-  // updateScores(winner);
-  // printScores();
-  // compare results
-  // tell the winner or tie
+  printScores(userScore, compScore);
 }
 
-function showRoundChoice(userChoice, compChoice) {
-  document.querySelector("#round-results").firstElementChild.textContent = `User choice is ${userChoice}`;
-  document.querySelector("#round-results").lastElementChild.textContent = ` Computer choice is ${compChoice}`;
+function gameOver() {
+  disableBtns();
+
+  showGameOverMessage();
+  showGameWinner(userScore, compScore);
+
+  showStartGameBtn();
+    // add a button to start a new rounds session
+    // make actions to restart all the values 
 }
+
+function showStartGameBtn() {
+  const btnStart = document.createElement("button");
+  btnStart.textContent = "Start a new game";
+  btnStart.className = "btn btn-dark";
+
+  const btnContainer = document.querySelector("#round");
+  btnContainer.appendChild(btnStart);
+
+  btnStart.addEventListener("click", startGame);
+}
+
+function startGame() {
+  userScore = 0;
+  compScore = 0;
+  round = 0;
+  showRound(round);
+  printScores(userScore, compScore);
+
+  showUserCompChoice("");
+  showRoundChoice("", "");
+
+  // clear user and comp choices  text
+  // clear user and comp choices separately
+  // make round 1
+
+  document.querySelector("#round button").remove();
+
+  enableBtns();
+  removeGameOverMessage();
+  removeGameWinner();
+
+  btnsContainer.addEventListener("click", playGame);
+}
+
+
+
+
