@@ -1,16 +1,16 @@
-function updateRoundNumber(round, maxRounds) {
+function updateRoundNumber(round,) {
   round++;
   return round;
 }
 
-function showRound(round, maxRounds) {
+function showRound(round, maxScore) {
   const roundP = document.querySelector("#round p");
-  if (isMaxRound(round, maxRounds)) return;
+  if (isMaxRound(round, maxScore)) return;
   else roundP.textContent = `Round ${round + 1}`;
 }
 
-function isMaxRound(round, maxRounds) {
-  if (round === maxRounds) return true;
+function isMaxRound(round, maxScore) {
+  if (round === maxScore) return true;
 }
 
 function showRoundChoice(userChoice, compChoice) {
