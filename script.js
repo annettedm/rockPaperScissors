@@ -7,7 +7,7 @@ import { showGameOverMessage, showGameWinner, removeGameOverMessage, removeGameW
 let userScore = 0;
 let compScore = 0;
 let round = 0;
-const maxRounds = 5;
+const maxScore = 5;
 
 
 const btnsContainer = document.querySelector("#btnsContainer");
@@ -17,7 +17,7 @@ btnsContainer.addEventListener("click", playGame);
 function playGame(event) {
   playRound(event);
 
-  if (round === maxRounds) {
+  if (userScore === maxScore || compScore === maxScore) {
     btnsContainer.removeEventListener("click", playGame);
     gameOver();
   }
@@ -27,13 +27,13 @@ function playRound(event) {
   const userChoice = event.target.id;
   const compChoice = makeComputerChoice();
 
-  round = updateRoundNumber(round, maxRounds);
+  round = updateRoundNumber(round, maxScore);
 
   let wording = showWinner(decideWinner(userChoice, compChoice));
   showUserCompChoice(wording);
 
   [userScore, compScore] = updateScores(decideWinner(userChoice, compChoice), userScore, compScore);
-  showRound(round, maxRounds);
+  showRound(round, maxScore);
   showRoundChoice(userChoice, compChoice);
   printScores(userScore, compScore);
 }
