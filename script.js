@@ -45,8 +45,6 @@ function gameOver() {
   showGameWinner(userScore, compScore);
 
   showStartGameBtn();
-    // add a button to start a new rounds session
-    // make actions to restart all the values 
 }
 
 function showStartGameBtn() {
@@ -69,10 +67,6 @@ function startGame() {
 
   showUserCompChoice("");
   showRoundChoice("", "");
-
-  // clear user and comp choices  text
-  // clear user and comp choices separately
-  // make round 1
 
   document.querySelector("#round button").remove();
 
